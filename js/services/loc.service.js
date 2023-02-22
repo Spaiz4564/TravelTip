@@ -37,7 +37,7 @@ function _createLoc(name, pos) {
   loc.lat = pos.lat || utilService.getRandomIntInclusive(32.5, 34.5)
   loc.lng = pos.lng || utilService.getRandomIntInclusive(34.5, 35.5)
   console.log(loc.lat, loc.lng)
-  loc.createdAt = Date.now()
+  loc.createdAt = getDate()
   loc.updatedAt = Date.now()
   return loc
 }
@@ -49,7 +49,7 @@ function getEmptyLoc() {
     lat: 0,
     lng: 0,
     weather: '',
-    createdAt: Date.now(),
+    createdAt: getDate(),
     updatedAt: Date.now(),
   }
 }

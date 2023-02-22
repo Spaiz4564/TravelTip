@@ -12,11 +12,10 @@ body {
   height: 100vh;
 }
 
-header {
+.search-tool {
+  gap: 5px;
   z-index: 3;
   display: flex;
-  justify-content: space-between;
-  padding-bottom: 3.5rem;
   position: absolute;
   right: 10px;
   top: 10px;
@@ -41,7 +40,7 @@ main {
 
 h1 {
   font-family: sans-serif;
-  font-size: 60px;
+  font-size: 45px;
   color: #e0e1e1;
   margin: 0;
 }
@@ -53,8 +52,24 @@ h2 {
 }
 
 .search-input {
+  box-shadow: 0 2px 4px rgb(0 0 0 / 20%), 0 -1px 0px rgb(0 0 0 / 2%);
+  border-radius: 10px;
+  padding: 10px;
+  border: 0;
   height: 50px;
   width: 500px;
+}
+
+.logo {
+  padding-right: 7px;
+  height: 55px;
+  width: 61px;
+}
+
+.logo-container {
+  align-items: center;
+  display: flex;
+  gap: 3px;
 }
 
 .info-container {
@@ -101,7 +116,7 @@ h2 {
   border-radius: 6px;
   text-align: left;
   border: 3px solid #42484d;
-  border-left: 5px solid #ffb545;
+  border-left: 5px solid #606ced;
 }
 
 .locs {
@@ -132,6 +147,28 @@ h2 {
   display: flex;
 }
 
+.search-form button {
+  transition: all 0.3s;
+  opacity: 0.7;
+  right: 8px;
+  position: absolute;
+  cursor: pointer;
+  background-color: transparent;
+  height: 50px;
+  width: 200px;
+  font-size: 1.5em;
+  border: 0;
+  width: 50px;
+}
+
+.search-form button:hover {
+  opacity: 1;
+}
+
+.search-form {
+  position: relative;
+}
+
 .my-location {
   padding-bottom: 2.5rem;
   display: flex;
@@ -143,7 +180,6 @@ h2 {
 }
 
 .btn-user-pos,
-.search button,
 .copy-loc {
   height: 50px;
   width: 100px;

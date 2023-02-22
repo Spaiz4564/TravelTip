@@ -31,10 +31,6 @@ function getPosition() {
   })
 }
 
-function renderDate() {
-  return locService.getDate()
-}
-
 function onAddMarker() {
   console.log('Adding a marker')
   mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 })
@@ -67,7 +63,7 @@ function renderLocations(locs) {
     <p>${l.name}</p>
     <p class="remove-btn" onclick="onRemovePlace('${l.id}')">X</p>
     </div>
-    <p>${renderDate()}</p>
+    <p>${l.createdAt}</p>
   </div>`
   )
   document.querySelector('.locs').innerHTML = strHTML.join('')

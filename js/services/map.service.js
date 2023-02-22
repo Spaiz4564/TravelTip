@@ -5,10 +5,14 @@ export const mapService = {
   panTo,
   addMarker,
   handleMouseClicks,
+  getClickedPos,
 }
 
 // Var that is used throughout this Module (not global)
 var gMap
+var gClickedPos = null
+
+var WEATHER_API = '771d657c519490928476077c19885b85'
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
   return _connectGoogleApi().then(() => {
@@ -20,9 +24,14 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
   })
 }
 
+function getClickedPos() {
+  return gClickedPos
+}
+
 function handleMouseClicks() {
   google.maps.event.addListener(gMap, 'click', function (event) {
     panTo(event.latLng.lat(), event.latLng.lng())
+    gClickedPos = { lat: event.latLng.lat(), lng: event.latLng.lng() }
   })
 }
 
@@ -53,4 +62,15 @@ function addMarker(loc) {
   })
 
   return marker
+}
+
+function getWeather(lat, lng) {
+  return axios
+    .get(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${WEATHER_API}`
+    )
+    .then((res) => {
+      console.log(res.data)
+      return res.data
+    })
 }

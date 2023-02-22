@@ -22,7 +22,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
 
 function _handleMouseClicks() {
   google.maps.event.addListener(gMap, 'click', function (event) {
-    addMarker({ lat: event.latLng.lat(), lng: event.latLng.lng() })
+    panTo(event.latLng.lat(), event.latLng.lng())
     console.log('event.latLng.lat()', event.latLng.lat())
     console.log('event.latLng.lng()', event.latLng.lng())
   })

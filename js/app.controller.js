@@ -14,8 +14,6 @@ window.onRemovePlace = onRemovePlace
 window.onSearchLocation = onSearchLocation
 window.onCopyLocation = onCopyLocation
 
-var gClickedPos = null
-
 function onInit() {
   mapService
     .initMap()
@@ -43,12 +41,18 @@ function onAddMarker() {
   console.log('Adding a marker', pos)
   mapService.addMarker(pos)
   const posName = locService.getPosName(pos.lat, pos.lng)
-  posName.then((res) => {
-    document.querySelector('.user-pos').innerHTML = res
-    console.log(res)
-    locService.addClickedLocation(res, pos.lat, pos.lng)
-    renderLocations(locService.getLocs())
-  })
+  posName
+    .then((res) => {
+      document.querySelector('.user-pos').innerHTML = res
+      console.log(res)
+      locService.addClickedLocation(res, pos.lat, pos.lng)
+      setQueryParams({ lat: pos.lat, lng: pos.lng })
+    })
+    .then(() => {
+      locService.getLocs().then((locs) => {
+        renderLocations(locs)
+      })
+    })
 }
 
 function onMoveToLoc(lat, lng) {
@@ -59,6 +63,7 @@ function onMoveToLoc(lat, lng) {
   posName
     .then((res) => {
       document.querySelector('.user-pos').innerHTML = res
+      renderWeather(lat, lng)
     })
     .then(() => {
       locService.getPosName(lat, lng).then((res) => {
@@ -79,7 +84,6 @@ function onRemovePlace(id, e) {
 
 function renderLocations(locs) {
   console.log(locs)
-
   const strHTML = locs.map(
     (l) => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
     <div class="weather-createdAt">
@@ -120,6 +124,7 @@ function onSearchLocation(ev) {
       mapService.panTo(res.lat, res.lng)
       mapService.addMarker({ lat: res.lat, lng: res.lng })
       setQueryParams({ lat: res.lat, lng: res.lng })
+      renderWeather(res.lat, res.lng)
     })
     .then(() => {
       locService.getLocs().then((locs) => {
@@ -151,4 +156,18 @@ function setQueryParams(newParams) {
   url.search = params.toString()
   console.log(url)
   window.history.pushState({ path: url.href }, '', url.href) //modify the URL of the current page without reloading the page
+}
+
+function renderWeather(lat, lng) {
+  mapService.getWeather(lat, lng).then((res) => {
+    const celciusTemp = Math.round(parseFloat(res.temp) - 273.15)
+    const strHTML = `<div class="weather">
+      <p>Weather:</p>
+      <p>${res.description}</p>
+      <p>Temperature:</p>
+      <p>${celciusTemp}°C</p>
+     
+      </div>`
+    document.querySelector('.weather-today').innerHTML = strHTML
+  })
 }

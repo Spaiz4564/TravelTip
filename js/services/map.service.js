@@ -6,6 +6,7 @@ export const mapService = {
   addMarker,
   handleMouseClicks,
   getClickedPos,
+  getWeather,
 }
 
 // Var that is used throughout this Module (not global)
@@ -21,6 +22,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
       zoom: 15,
     })
     handleMouseClicks()
+    getWeather(lat, lng)
   })
 }
 
@@ -65,12 +67,21 @@ function addMarker(loc) {
 }
 
 function getWeather(lat, lng) {
-  return axios
-    .get(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${WEATHER_API}`
-    )
-    .then((res) => {
-      console.log(res.data)
-      return res.data
-    })
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${WEATHER_API}`
+  console.log(url)
+  return axios.get(url).then((res) => {
+    console.log(res.data)
+    const { temp, humidity } = res.data.main
+    const { description } = res.data.weather[0]
+    const { speed } = res.data.wind
+    const weather = {
+      temp,
+      humidity,
+      description,
+      speed,
+    }
+    console.log(temp)
+    console.log(weather)
+    return weather
+  })
 }

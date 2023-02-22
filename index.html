@@ -1,49 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/travelTip.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/travelTip.css" />
     <title>TravelTip</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>TravelTip</h1>
-        <div class="search">
-            <form onsubmit="onSubmitLocation()" action="">
-                <input class="search-input" type="text" placeholder="Enter location">
-                <button>GO</button>
-               </form>
-               <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
-        </div>
+      <h1>TravelTip</h1>
+      <div class="search">
+        <form onsubmit="onSubmitLocation()" action="">
+          <input
+            class="search-input"
+            type="text"
+            placeholder="Enter location"
+          />
+          <button>GO</button>
+        </form>
+        <button onclick="onGetUserPos()" class="btn-user-pos">
+          Get User Position
+        </button>
+      </div>
     </header>
     <div class="my-location">
-        <p>You are at: Central park New York<span class="user-pos"></span></p>
-        <button class="copy-loc">Copy Location</button>
+      <p>You are at: Central park New York<span class="user-pos"></span></p>
+      <button class="copy-loc">Copy Location</button>
     </div>
     <main>
-        <div class="info-container">
-            <div class="weather-today">
-                <p>Weather today</p>
-            </div>
-            <div class="my-locations">
-                <p>Locations: 
-                    <pre class="locs"></pre>
-                </p>
-            </div>
+      <div class="info-container">
+        <div class="weather-today">
+          <p>Weather today</p>
         </div>
-        <div id="map" style="width: 60%; height: 400px;"></div>
+        <div class="locs"></div>
+      </div>
+      <div id="map" style="width: 60%; height: 625px"></div>
     </main>
-   
-    <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
-    
-    <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
-    <button onclick="onPanTo()"class="btn-pan">Pan Map to Tokyo</button>
 
-   
-   
-    
+    <button onclick="onAddMarker()" class="btn-add-marker">
+      Add Marker Speific Location
+    </button>
+
+    <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
+    <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
 
     <script type="module" src="js/app.controller.js"></script>
-</body>
+  </body>
 </html>

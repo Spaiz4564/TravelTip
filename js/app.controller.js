@@ -30,21 +30,37 @@ function onAddMarker() {
 }
 
 function onGetLocs() {
-  locService.getLocs().then((locs) => {
+  locService.getLocs().then(locs => {
     console.log('Locations:', locs)
-    document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
+    renderLocations(locs)
+    // document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
   })
+}
+
+function renderLocations(locs) {
+  console.log(locs)
+  const strHTML = locs.map(
+    l => `<div class="card">
+  
+    <div class="weather-createdAt">
+    <p>${l.name}</p>
+    <p>WEATHER</p>
+    </div>
+    <p>CreatedAt</p>
+  </div>`
+  )
+  document.querySelector('.locs').innerHTML = strHTML.join('')
 }
 
 function onGetUserPos() {
   getPosition()
-    .then((pos) => {
+    .then(pos => {
       console.log('User position is:', pos.coords)
       document.querySelector(
         '.user-pos'
       ).innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('err!!!', err)
     })
 }

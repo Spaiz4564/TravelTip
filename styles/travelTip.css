@@ -22,6 +22,7 @@ header {
 }
 
 .info-container {
+  background-color: #2d3439;
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -47,8 +48,37 @@ h1 {
   background-color: #5c5c5c;
 }
 
+.weather-createdAt {
+  display: flex;
+  justify-content: space-between;
+}
+
+.locs {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card p {
+  font-size: 14px;
+}
+
+.card {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  background-color: #42484d;
+  padding: 0px 5px;
+  color: #e7e4e7;
+  border-radius: 6px;
+  text-align: left;
+  border: 3px solid #42484d;
+  border-left: 5px solid #ffb545;
+}
+
 .weather-today,
-.my-locations {
+.locs {
   height: 50%;
   width: 100%;
 }

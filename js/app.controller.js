@@ -16,7 +16,7 @@ function onInit() {
       console.log('Map is ready')
     })
     .then(() => {
-      locService.getLocs().then((locs) => {
+      locService.getLocs().then(locs => {
         renderLocations(locs)
       })
     })
@@ -28,10 +28,6 @@ function getPosition() {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject)
   })
-}
-
-function renderDate() {
-  return locService.getDate()
 }
 
 function onAddMarker() {
@@ -47,7 +43,7 @@ function onMoveToLoc(lat, lng) {
 function onRemovePlace(id) {
   console.log(id)
   locService.removeLoc(id).then(() => {
-    locService.getLocs().then((locs) => {
+    locService.getLocs().then(locs => {
       renderLocations(locs)
     })
   })
@@ -56,12 +52,12 @@ function onRemovePlace(id) {
 function renderLocations(locs) {
   console.log(locs)
   const strHTML = locs.map(
-    (l) => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
+    l => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
     <div class="weather-createdAt">
     <p>${l.name}</p>
     <p class="remove-btn" onclick="onRemovePlace('${l.id}')">X</p>
     </div>
-    <p>${renderDate()}</p>
+    <p>${l.createdAt}</p>
   </div>`
   )
   document.querySelector('.locs').innerHTML = strHTML.join('')
@@ -69,7 +65,7 @@ function renderLocations(locs) {
 
 function onGetUserPos() {
   getPosition()
-    .then((pos) => {
+    .then(pos => {
       console.log('User position is:', pos.coords)
       document.querySelector(
         '.user-pos'
@@ -80,7 +76,7 @@ function onGetUserPos() {
         lng: pos.coords.longitude,
       })
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('err!!!', err)
     })
 }
@@ -93,7 +89,7 @@ function onSearchLocation(ev) {
   ev.preventDefault()
   const search = ev.target.querySelector('input[name="location"]').value
   console.log(search)
-  locService.searchLocs(search).then((res) => {
+  locService.searchLocs(search).then(res => {
     console.log(res)
     mapService.panTo(res.lat, res.lng)
     mapService.addMarker({ lat: res.lat, lng: res.lng })

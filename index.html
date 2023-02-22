@@ -15,17 +15,24 @@
   <body>
     <div class="app-container">
       <div class="info">
-        <h1>TravelTip</h1>
+        <div class="logo-container">
+          <img class="logo" src="logoicon.png" alt="" />
+          <h1>triptips</h1>
+        </div>
+
         <h2>You are at: <span class="user-pos"></span></h2>
         <div class="weather-today">WEATHER</div>
         <div class="locs"></div>
       </div>
       <div class="map">
-        <header>
+        <div class="search-tool">
           <button onclick="onAddMarker()" class="btn-add-marker">
             Add Marker
           </button>
           <button class="copy-loc">Copy Location</button>
+          <button onclick="onGetUserPos()" class="btn-user-pos">
+            Get User Position
+          </button>
           <div class="search">
             <form onsubmit="onSearchLocation(event)" class="search-form">
               <input
@@ -36,11 +43,8 @@
               />
               <button><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
-            <button onclick="onGetUserPos()" class="btn-user-pos">
-              Get User Position
-            </button>
           </div>
-        </header>
+        </div>
         <div id="map" style="width: 100%; height: 100vh"></div>
       </div>
     </div>

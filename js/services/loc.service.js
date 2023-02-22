@@ -14,7 +14,7 @@ export const locService = {
 }
 
 const API_KEY = 'AIzaSyAXB9zBhbRkr8a-2c7o9w11bA-2VfhmRX4'
-const WEATHER_KEY = '8062575da50bcd590cba16adea5d20e6'
+const WEATHER_KEY = '166b8698bd1457e164653de7afb850d5'
 
 _createLocs()
 
@@ -95,13 +95,13 @@ function searchLocs(searchStr) {
     .get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${searchStr}&key=${API_KEY}`
     )
-    .then((res) => res.data)
-    .then((data) => {
+    .then(res => res.data)
+    .then(data => {
       const { lat, lng } = data.results[0].geometry.location
       const { long_name: name } = data.results[0].address_components[0]
       return { lat, lng, name }
     })
-    .then((loc) => {
+    .then(loc => {
       const newLoc = _createLoc(loc.name, loc)
       return storageService.post('locsDB', newLoc)
     })
@@ -112,8 +112,8 @@ function getPosName(lat, lng) {
   console.log(url)
   return axios
     .get(url)
-    .then((res) => res.data)
-    .then((data) => {
+    .then(res => res.data)
+    .then(data => {
       console.log(data)
       console.log(data.results[7].formatted_address)
       return data.results[7].formatted_address
@@ -121,7 +121,7 @@ function getPosName(lat, lng) {
 }
 
 function getWeather() {
-  const url = `https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid=${WEATHER_KEY}`
+  const url = `https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid=166b8698bd1457e164653de7afb850d5`
   // console.log(url)
   return axios.get(url).then(res => console.log(res))
 }

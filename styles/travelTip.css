@@ -101,6 +101,11 @@ h2 {
   width: 70%;
 }
 
+.cloud {
+  width: 60%;
+  height: 138%;
+}
+
 .locs {
   padding: 10px;
   display: flex;
@@ -151,7 +156,13 @@ h2 {
   padding: 20px;
 }
 
+.weather-info h1 {
+  font-weight: 100 !important;
+}
+
 .weather-today {
+  border-radius: 6px;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -162,6 +173,7 @@ h2 {
 }
 
 .app-container {
+  height: 100vh;
   display: flex;
 }
 

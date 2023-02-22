@@ -50,4 +50,6 @@ function addMarker(loc) {
     map: gMap,
     title: 'Hello World!',
   })
+
+  return marker
 }

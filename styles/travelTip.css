@@ -98,12 +98,40 @@ h2 {
   overflow: hidden;
   position: relative;
   height: 100vh;
-  width: 70%;
+  width: 75%;
 }
 
 .cloud {
-  width: 60%;
-  height: 138%;
+  width: 21%;
+  height: 3%;
+}
+
+.status {
+  font-size: 15px;
+}
+
+.weather {
+  display: flex;
+  gap: 7px;
+}
+
+.temp {
+  font-weight: 200;
+  font-size: 4.5rem;
+}
+
+.weather-today {
+  gap: 5px;
+  flex-direction: column;
+  border-radius: 6px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 83%;
+  height: 20%;
+  background-color: #42484d;
+  text-align: center;
 }
 
 .locs {
@@ -147,7 +175,7 @@ h2 {
 }
 
 .info {
-  width: 30%;
+  width: 25%;
   gap: 20px;
   background-color: #2d3439;
   display: flex;
@@ -158,18 +186,6 @@ h2 {
 
 .weather-info h1 {
   font-weight: 100 !important;
-}
-
-.weather-today {
-  border-radius: 6px;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 85%;
-  height: 20%;
-  background-color: #42484d;
-  text-align: center;
 }
 
 .app-container {

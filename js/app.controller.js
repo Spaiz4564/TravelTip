@@ -14,6 +14,8 @@ window.onRemovePlace = onRemovePlace
 window.onSearchLocation = onSearchLocation
 window.onCopyLocation = onCopyLocation
 
+var gClickedPos = null
+
 function onInit() {
   mapService
     .initMap()
@@ -36,18 +38,33 @@ function getPosition() {
   })
 }
 
-function onAddMarker(lat, lng) {
-  mapService.addMarker({ lat, lng })
+function onAddMarker() {
+  const pos = mapService.getClickedPos()
+  console.log('Adding a marker', pos)
+  mapService.addMarker(pos)
+  const posName = locService.getPosName(pos.lat, pos.lng)
+  posName.then((res) => {
+    document.querySelector('.user-pos').innerHTML = res
+    console.log(res)
+    locService.addClickedLocation(res, pos.lat, pos.lng)
+    renderLocations(locService.getLocs())
+  })
 }
 
 function onMoveToLoc(lat, lng) {
   console.log(lat, lng)
   mapService.panTo(lat, lng)
-  //we need to get the name of the location
+  setQueryParams({ lat, lng })
   const posName = locService.getPosName(lat, lng)
-  posName.then((res) => {
-    document.querySelector('.user-pos').innerHTML = res
-  })
+  posName
+    .then((res) => {
+      document.querySelector('.user-pos').innerHTML = res
+    })
+    .then(() => {
+      locService.getPosName(lat, lng).then((res) => {
+        locService.addLoc(res, lat, lng)
+      })
+    })
 }
 
 function onRemovePlace(id, e) {
@@ -62,6 +79,7 @@ function onRemovePlace(id, e) {
 
 function renderLocations(locs) {
   console.log(locs)
+
   const strHTML = locs.map(
     (l) => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
     <div class="weather-createdAt">

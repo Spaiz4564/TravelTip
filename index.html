@@ -10,8 +10,9 @@
     <header>
       <h1>TravelTip</h1>
       <div class="search">
-        <form onsubmit="onSubmitLocation()" action="">
+        <form onsubmit="onSearchLocation(event)" class="search-form">
           <input
+            name="location"
             class="search-input"
             type="text"
             placeholder="Enter location" />
@@ -42,6 +43,7 @@
 
     <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
 
+    <script src="lib/axios.js"></script>
     <script type="module" src="js/app.controller.js"></script>
   </body>
 </html>

@@ -7,6 +7,7 @@ window.onPanTo = onPanTo
 window.onGetUserPos = onGetUserPos
 window.onMoveToLoc = onMoveToLoc
 window.onRemovePlace = onRemovePlace
+window.onSearchLocation = onSearchLocation
 
 function onInit() {
   mapService
@@ -22,7 +23,6 @@ function onInit() {
     .catch(() => console.log('Error: cannot init map'))
 }
 
-// This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
   console.log('Getting Pos')
   return new Promise((resolve, reject) => {
@@ -43,7 +43,9 @@ function onMoveToLoc(lat, lng) {
 function onRemovePlace(id) {
   console.log(id)
   locService.removeLoc(id).then(() => {
-    onGetLocs()
+    locService.getLocs().then((locs) => {
+      renderLocations(locs)
+    })
   })
 }
 
@@ -81,4 +83,15 @@ function onGetUserPos() {
 function onPanTo() {
   console.log('Panning the Map')
   mapService.panTo(35.6895, 139.6917)
+}
+
+function onSearchLocation(ev) {
+  ev.preventDefault()
+  const search = ev.target.querySelector('input[name="location"]').value
+  console.log(search)
+  locService.searchLocs(search).then((res) => {
+    console.log(res)
+    mapService.panTo(res.lat, res.lng)
+    mapService.addMarker({ lat: res.lat, lng: res.lng })
+  })
 }

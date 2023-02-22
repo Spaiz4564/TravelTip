@@ -8,6 +8,7 @@ window.onGetUserPos = onGetUserPos
 window.onMoveToLoc = onMoveToLoc
 window.onRemovePlace = onRemovePlace
 window.onSearchLocation = onSearchLocation
+window.onCopyLocation = onCopyLocation
 
 function onInit() {
   mapService
@@ -103,4 +104,29 @@ function onSearchLocation(ev) {
       })
     })
   document.querySelector('.user-pos').innerHTML = search
+}
+
+function onCopyLocation() {
+  const locs = locService.getLocs()
+  locs
+    .then((res) => {
+      console.log(res)
+      const lastLoc = res[res.length - 1]
+      const loc = `${lastLoc.lat} & ${lastLoc.lng}`
+      console.log(loc)
+      navigator.clipboard.writeText(loc)
+    })
+    .then(() => {
+      renderPosToQueryParams()
+    })
+}
+
+function renderPosToQueryParams() {
+  const locs = locService.getLocs()
+  locs.then((res) => {
+    const lastLoc = res[res.length - 1]
+    const lat = lastLoc.lat
+    const lng = lastLoc.lng
+    window.location.href = `index.html?lat=${lat}&lng=${lng}`
+  })
 }

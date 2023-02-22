@@ -4,6 +4,9 @@ import { utilService } from './util.service.js'
 export const locService = {
   getLocs,
   getLocsForDisplay,
+  getLocById,
+  removeLoc,
+  addLoc,
 }
 
 _createLocs()
@@ -50,4 +53,16 @@ function _createDemoLocs() {
 
 function getLocsForDisplay() {
   return getLocs()
+}
+
+function getLocById(locId) {
+  return storageService.get('locsDB', locId)
+}
+
+function addLoc(loc) {
+  return storageService.post('locsDB', loc)
+}
+
+function removeLoc(locId) {
+  return storageService.remove('locsDB', locId)
 }

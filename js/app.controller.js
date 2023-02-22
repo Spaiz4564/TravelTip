@@ -55,7 +55,7 @@ function renderLocations(locs) {
     (l) => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
     <div class="weather-createdAt">
     <p>${l.name}</p>
-    <p onclick="onRemovePlace('${l.id}')">X</p>
+    <p class="remove-btn" onclick="onRemovePlace('${l.id}')">X</p>
     </div>
     <p>${l.createdAt}</p>
   </div>`

@@ -50,7 +50,8 @@ function onMoveToLoc(lat, lng) {
   })
 }
 
-function onRemovePlace(id) {
+function onRemovePlace(id, e) {
+  e.stopPropagation()
   console.log(id)
   locService.removeLoc(id).then(() => {
     locService.getLocs().then((locs) => {
@@ -65,7 +66,7 @@ function renderLocations(locs) {
     (l) => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
     <div class="weather-createdAt">
     <p>${l.name}</p>
-    <p class="remove-btn" onclick="onRemovePlace('${l.id}')">X</p>
+    <p class="remove-btn" onclick="onRemovePlace('${l.id}', event)"><i class="fa-solid fa-xmark"></i></p>
     </div>
     <p>${l.createdAt}</p>
   </div>`

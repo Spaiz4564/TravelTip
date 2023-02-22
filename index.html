@@ -8,7 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Manrope&display=swap"
-      rel="stylesheet" />
+      rel="stylesheet"
+    />
     <title>TravelTip</title>
   </head>
   <body>
@@ -24,6 +25,7 @@
         <div class="locs"></div>
       </div>
       <div class="map">
+        <img class="my-loc" onclick="onGetUserPos()" src="loc.png" alt="" />
         <div class="search-tool">
           <button onclick="onAddMarker()" class="btn-add-marker">
             Add Marker
@@ -31,16 +33,14 @@
           <button onclick="onCopyLocation()" class="copy-loc">
             Copy Location
           </button>
-          <button onclick="onGetUserPos()" class="btn-user-pos">
-            Get User Position
-          </button>
           <div class="search">
             <form onsubmit="onSearchLocation(event)" class="search-form">
               <input
                 name="location"
                 class="search-input"
                 type="text"
-                placeholder="Enter location" />
+                placeholder="Enter location"
+              />
               <button><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
           </div>
@@ -53,6 +53,7 @@
     <script type="module" src="js/app.controller.js"></script>
     <script
       src="https://kit.fontawesome.com/096b5eafcd.js"
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

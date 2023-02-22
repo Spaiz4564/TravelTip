@@ -55,7 +55,7 @@ function getEmptyLoc() {
 }
 
 function _createDemoLocs() {
-  const locNames = ['Tel Aviv', 'Munich', 'Yavne']
+  const locNames = ['Tel aviv', 'Munich', 'Yavne']
   const locPos = [
     { lat: 32.08605454733057, lng: 34.781365982678444 },
     { lat: 48.1351253, lng: 11.5819805 },
@@ -88,13 +88,13 @@ function searchLocs(searchStr) {
     .get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${searchStr}&key=${API_KEY}`
     )
-    .then((res) => res.data)
-    .then((data) => {
+    .then(res => res.data)
+    .then(data => {
       const { lat, lng } = data.results[0].geometry.location
       const { long_name: name } = data.results[0].address_components[0]
       return { lat, lng, name }
     })
-    .then((loc) => {
+    .then(loc => {
       const newLoc = _createLoc(loc.name, loc)
       return storageService.post('locsDB', newLoc)
     })
@@ -105,8 +105,8 @@ function getPosName(lat, lng) {
   console.log(url)
   return axios
     .get(url)
-    .then((res) => res.data)
-    .then((data) => {
+    .then(res => res.data)
+    .then(data => {
       console.log(data.results[7].formatted_address)
       return data.results[7].formatted_address
     })

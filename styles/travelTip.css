@@ -121,6 +121,7 @@ h2 {
 }
 
 .weather-today {
+  border-bottom: 5px solid #606ced;
   gap: 5px;
   flex-direction: column;
   border-radius: 6px;

@@ -9,6 +9,7 @@ export const locService = {
   addLoc,
   getDate,
   searchLocs,
+  getPosName,
 }
 
 const API_KEY = 'AIzaSyAXB9zBhbRkr8a-2c7o9w11bA-2VfhmRX4'
@@ -87,10 +88,26 @@ function searchLocs(searchStr) {
     .get(
       `https://maps.googleapis.com/maps/api/geocode/json?address=${searchStr}&key=${API_KEY}`
     )
-    .then(res => res.data)
-    .then(data => {
+    .then((res) => res.data)
+    .then((data) => {
       const { lat, lng } = data.results[0].geometry.location
       const { long_name: name } = data.results[0].address_components[0]
       return { lat, lng, name }
+    })
+    .then((loc) => {
+      const newLoc = _createLoc(loc.name, loc)
+      return storageService.post('locsDB', newLoc)
+    })
+}
+
+function getPosName(lat, lng) {
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`
+  console.log(url)
+  return axios
+    .get(url)
+    .then((res) => res.data)
+    .then((data) => {
+      console.log(data.results[7].formatted_address)
+      return data.results[7].formatted_address
     })
 }

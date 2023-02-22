@@ -7,12 +7,17 @@ export const locService = {
   getLocById,
   removeLoc,
   addLoc,
+  getDate,
 }
 
 _createLocs()
 
 function getLocs() {
   return storageService.query('locsDB')
+}
+
+function getDate() {
+  return utilService.makeDate()
 }
 
 function _createLocs() {

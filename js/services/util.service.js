@@ -7,6 +7,7 @@ export const utilService = {
   randomPetType,
   makeLorem,
   getRandomIntInclusive,
+  makeDate,
 }
 
 const gPetNames = ['Bob', 'Charls', 'Chip']
@@ -14,6 +15,16 @@ const gPetTypes = ['cat', 'dog', 'bird', 'fish', 'rabbit']
 
 function saveToStorage(key, value) {
   localStorage.setItem(key, JSON.stringify(value))
+}
+
+function makeDate() {
+  var dateObj = new Date()
+  var month = dateObj.getUTCMonth() + 1 //months from 1-12
+  var day = dateObj.getUTCDate()
+  var year = dateObj.getUTCFullYear()
+
+  const newDate = year + '/' + month + '/' + day
+  return newDate
 }
 
 function loadFromStorage(key) {

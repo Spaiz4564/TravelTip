@@ -17,19 +17,15 @@
       <div class="info">
         <h1>TravelTip</h1>
         <h2>You are at: <span class="user-pos"></span></h2>
-        <div class="weather-today">
-          <button onclick="onAddMarker()" class="btn-add-marker">
-            Add Marker Speific Location
-          </button>
-
-          <div class="my-location">
-            <button class="copy-loc">Copy Location</button>
-          </div>
-        </div>
+        <div class="weather-today">WEATHER</div>
         <div class="locs"></div>
       </div>
       <div class="map">
         <header>
+          <button onclick="onAddMarker()" class="btn-add-marker">
+            Add Marker
+          </button>
+          <button class="copy-loc">Copy Location</button>
           <div class="search">
             <form onsubmit="onSubmitLocation()" action="">
               <input

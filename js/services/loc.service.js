@@ -8,7 +8,10 @@ export const locService = {
   removeLoc,
   addLoc,
   getDate,
+  searchLocs,
 }
+
+const API_KEY = 'AIzaSyAXB9zBhbRkr8a-2c7o9w11bA-2VfhmRX4'
 
 _createLocs()
 
@@ -77,4 +80,17 @@ function addLoc(loc) {
 
 function removeLoc(locId) {
   return storageService.remove('locsDB', locId)
+}
+
+function searchLocs(searchStr) {
+  return axios
+    .get(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${searchStr}&key=${API_KEY}`
+    )
+    .then(res => res.data)
+    .then(data => {
+      const { lat, lng } = data.results[0].geometry.location
+      const { long_name: name } = data.results[0].address_components[0]
+      return { lat, lng, name }
+    })
 }

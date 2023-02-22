@@ -27,8 +27,9 @@
           </button>
           <button class="copy-loc">Copy Location</button>
           <div class="search">
-            <form onsubmit="onSubmitLocation()" action="">
+            <form onsubmit="onSearchLocation(event)" class="search-form">
               <input
+                name="location"
                 class="search-input"
                 type="text"
                 placeholder="Enter location"
@@ -44,10 +45,7 @@
       </div>
     </div>
 
-    <script
-      src="https://kit.fontawesome.com/096b5eafcd.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="lib/axios.js"></script>
     <script type="module" src="js/app.controller.js"></script>
   </body>
 </html>

@@ -7,6 +7,7 @@ window.onPanTo = onPanTo
 window.onGetUserPos = onGetUserPos
 window.onMoveToLoc = onMoveToLoc
 window.onRemovePlace = onRemovePlace
+window.onSearchLocation = onSearchLocation
 
 function onInit() {
   mapService
@@ -15,14 +16,13 @@ function onInit() {
       console.log('Map is ready')
     })
     .then(() => {
-      locService.getLocs().then(locs => {
+      locService.getLocs().then((locs) => {
         renderLocations(locs)
       })
     })
     .catch(() => console.log('Error: cannot init map'))
 }
 
-// This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
   console.log('Getting Pos')
   return new Promise((resolve, reject) => {
@@ -47,7 +47,7 @@ function onMoveToLoc(lat, lng) {
 function onRemovePlace(id) {
   console.log(id)
   locService.removeLoc(id).then(() => {
-    locService.getLocs().then(locs => {
+    locService.getLocs().then((locs) => {
       renderLocations(locs)
     })
   })
@@ -56,7 +56,7 @@ function onRemovePlace(id) {
 function renderLocations(locs) {
   console.log(locs)
   const strHTML = locs.map(
-    l => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
+    (l) => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
     <div class="weather-createdAt">
     <p>${l.name}</p>
     <p class="remove-btn" onclick="onRemovePlace('${l.id}')">X</p>
@@ -69,7 +69,7 @@ function renderLocations(locs) {
 
 function onGetUserPos() {
   getPosition()
-    .then(pos => {
+    .then((pos) => {
       console.log('User position is:', pos.coords)
       document.querySelector(
         '.user-pos'
@@ -80,11 +80,22 @@ function onGetUserPos() {
         lng: pos.coords.longitude,
       })
     })
-    .catch(err => {
+    .catch((err) => {
       console.log('err!!!', err)
     })
 }
 function onPanTo() {
   console.log('Panning the Map')
   mapService.panTo(35.6895, 139.6917)
+}
+
+function onSearchLocation(ev) {
+  ev.preventDefault()
+  const search = ev.target.querySelector('input[name="location"]').value
+  console.log(search)
+  locService.searchLocs(search).then((res) => {
+    console.log(res)
+    mapService.panTo(res.lat, res.lng)
+    mapService.addMarker({ lat: res.lat, lng: res.lng })
+  })
 }

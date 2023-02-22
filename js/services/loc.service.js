@@ -13,6 +13,7 @@ export const locService = {
 }
 
 const API_KEY = 'AIzaSyAXB9zBhbRkr8a-2c7o9w11bA-2VfhmRX4'
+const WEATHER_KEY = '8062575da50bcd590cba16adea5d20e6'
 
 _createLocs()
 
@@ -111,3 +112,11 @@ function getPosName(lat, lng) {
       return data.results[7].formatted_address
     })
 }
+
+function getWeather() {
+  const url = `https://api.openweathermap.org/data/3.0/onecall?lat=33.44&lon=-94.04&exclude=hourly,daily&appid=${WEATHER_KEY}`
+  // console.log(url)
+  return axios.get(url).then(res => console.log(res))
+}
+
+getWeather()

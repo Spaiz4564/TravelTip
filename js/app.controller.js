@@ -6,6 +6,8 @@ window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
+window.onMoveToLoc = onMoveToLoc
+window.onRemovePlace = onRemovePlace
 
 function onInit() {
   mapService
@@ -37,16 +39,23 @@ function onGetLocs() {
   })
 }
 
+function onMoveToLoc(lat, lng) {
+  console.log(lat, lng)
+}
+
+function onRemovePlace(id) {
+  console.log(id)
+}
+
 function renderLocations(locs) {
   console.log(locs)
   const strHTML = locs.map(
-    l => `<div class="card">
-  
+    l => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
     <div class="weather-createdAt">
     <p>${l.name}</p>
-    <p>WEATHER</p>
+    <p onclick="onRemovePlace('${l.id}')">X</p>
     </div>
-    <p>CreatedAt</p>
+    <p>${l.createdAt}</p>
   </div>`
   )
   document.querySelector('.locs').innerHTML = strHTML.join('')

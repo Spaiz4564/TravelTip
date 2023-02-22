@@ -4,7 +4,6 @@ import { mapService } from './services/map.service.js'
 window.onload = onInit
 window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
-window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onMoveToLoc = onMoveToLoc
 window.onRemovePlace = onRemovePlace
@@ -14,6 +13,11 @@ function onInit() {
     .initMap()
     .then(() => {
       console.log('Map is ready')
+    })
+    .then(() => {
+      locService.getLocs().then((locs) => {
+        renderLocations(locs)
+      })
     })
     .catch(() => console.log('Error: cannot init map'))
 }
@@ -31,26 +35,22 @@ function onAddMarker() {
   mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 })
 }
 
-function onGetLocs() {
-  locService.getLocs().then(locs => {
-    console.log('Locations:', locs)
-    renderLocations(locs)
-    // document.querySelector('.locs').innerText = JSON.stringify(locs, null, 2)
-  })
-}
-
 function onMoveToLoc(lat, lng) {
   console.log(lat, lng)
+  mapService.panTo(lat, lng)
 }
 
 function onRemovePlace(id) {
   console.log(id)
+  locService.removeLoc(id).then(() => {
+    onGetLocs()
+  })
 }
 
 function renderLocations(locs) {
   console.log(locs)
   const strHTML = locs.map(
-    l => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
+    (l) => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
     <div class="weather-createdAt">
     <p>${l.name}</p>
     <p onclick="onRemovePlace('${l.id}')">X</p>
@@ -63,13 +63,18 @@ function renderLocations(locs) {
 
 function onGetUserPos() {
   getPosition()
-    .then(pos => {
+    .then((pos) => {
       console.log('User position is:', pos.coords)
       document.querySelector(
         '.user-pos'
-      ).innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+      ).innerHTML = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+      mapService.panTo(pos.coords.latitude, pos.coords.longitude)
+      mapService.addMarker({
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude,
+      })
     })
-    .catch(err => {
+    .catch((err) => {
       console.log('err!!!', err)
     })
 }
@@ -77,5 +82,3 @@ function onPanTo() {
   console.log('Panning the Map')
   mapService.panTo(35.6895, 139.6917)
 }
-
-//we need to build a Enable the user to pick a place by clicking on the map.

@@ -22,11 +22,12 @@ function _createLocs() {
   }
 }
 
-function _createLoc(name) {
+function _createLoc(name, pos) {
   const loc = getEmptyLoc()
   loc.name = name || utilService.makeLorem(10)
-  loc.lat = utilService.getRandomIntInclusive(29.5, 32.5)
-  loc.lng = utilService.getRandomIntInclusive(34.5, 36.5)
+  loc.lat = pos.lat || utilService.getRandomIntInclusive(32.5, 34.5)
+  loc.lng = pos.lng || utilService.getRandomIntInclusive(34.5, 35.5)
+  console.log(loc.lat, loc.lng)
   loc.createdAt = Date.now()
   loc.updatedAt = Date.now()
   return loc
@@ -46,9 +47,15 @@ function getEmptyLoc() {
 
 function _createDemoLocs() {
   const locNames = ['Tel Aviv', 'Munich', 'Yavne']
-  const locs = locNames.map((name) => _createLoc(name))
+  const locPos = [
+    { lat: 32.08605454733057, lng: 34.781365982678444 },
+    { lat: 48.1351253, lng: 11.5819805 },
+    { lat: 31.87782213831257, lng: 34.73996595503225 },
+  ]
+  const locs = locNames.map((name, idx) => {
+    return _createLoc(name, locPos[idx])
+  })
   utilService.saveToStorage('locsDB', locs)
-  return locs
 }
 
 function getLocsForDisplay() {

@@ -1,3 +1,5 @@
+import { locService } from './loc.service.js'
+
 export const mapService = {
   initMap,
   panTo,
@@ -13,7 +15,6 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
       center: { lat, lng },
       zoom: 15,
     })
-
     _handleMouseClicks()
   })
 }
@@ -21,19 +22,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
 function _handleMouseClicks() {
   google.maps.event.addListener(gMap, 'click', function (event) {
     panTo(event.latLng.lat(), event.latLng.lng())
-    console.log('event.latLng.lat()', event.latLng.lat())
-    console.log('event.latLng.lng()', event.latLng.lng())
   })
-}
-
-function addMarker(loc) {
-  var marker = new google.maps.Marker({
-    position: loc,
-    map: gMap,
-    title: 'Hello World!',
-  })
-  panTo(loc.lat, loc.lng)
-  return marker
 }
 
 function panTo(lat, lng) {
@@ -52,5 +41,13 @@ function _connectGoogleApi() {
   return new Promise((resolve, reject) => {
     elGoogleApi.onload = resolve
     elGoogleApi.onerror = () => reject('Google script failed to load')
+  })
+}
+
+function addMarker(loc) {
+  var marker = new google.maps.Marker({
+    position: loc,
+    map: gMap,
+    title: 'Hello World!',
   })
 }

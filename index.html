@@ -14,8 +14,7 @@
           <input
             class="search-input"
             type="text"
-            placeholder="Enter location"
-          />
+            placeholder="Enter location" />
           <button>GO</button>
         </form>
         <button onclick="onGetUserPos()" class="btn-user-pos">
@@ -24,7 +23,7 @@
       </div>
     </header>
     <div class="my-location">
-      <p>You are at: Central park New York<span class="user-pos"></span></p>
+      <p><span class="user-pos"></span></p>
       <button class="copy-loc">Copy Location</button>
     </div>
     <main>
@@ -41,7 +40,6 @@
       Add Marker Speific Location
     </button>
 
-    <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
     <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
 
     <script type="module" src="js/app.controller.js"></script>

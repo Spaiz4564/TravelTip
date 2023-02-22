@@ -1,0 +1,75 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: linear-gradient(to right bottom, #fbdb89, #f48982);
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: sans-serif;
+  height: 98.29vh;
+  padding: 1rem 5rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 3.5rem;
+}
+
+.my-location p {
+  font-size: 20px;
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+main {
+  display: flex;
+
+  gap: 20px;
+}
+
+h1 {
+  font-size: 70px;
+  margin: 0;
+}
+
+.search-input {
+  height: 50px;
+  width: 500px;
+}
+
+.info-container {
+  background-color: #5c5c5c;
+}
+
+.weather-today,
+.my-locations {
+  height: 50%;
+  width: 100%;
+}
+
+.weather-today {
+  background-color: lightcoral;
+}
+
+.my-location {
+  padding-bottom: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.search {
+  display: flex;
+}
+
+.btn-user-pos,
+.search button,
+.copy-loc {
+  height: 50px;
+  width: 100px;
+}

@@ -49,8 +49,9 @@
       <div class="map">
         <header>
           <div class="search">
-            <form onsubmit="onSubmitLocation()" action="">
+            <form onsubmit="onSearchLocation(event)" class="search-form">
               <input
+                name="location"
                 class="search-input"
                 type="text"
                 placeholder="Enter location"

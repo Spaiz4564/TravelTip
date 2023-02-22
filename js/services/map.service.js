@@ -1,52 +1,58 @@
 export const mapService = {
-    initMap,
-    addMarker,
-    panTo
+  initMap,
+  panTo,
 }
-
 
 // Var that is used throughout this Module (not global)
 var gMap
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log('InitMap')
-    return _connectGoogleApi()
-        .then(() => {
-            console.log('google available')
-            gMap = new google.maps.Map(
-                document.querySelector('#map'), {
-                center: { lat, lng },
-                zoom: 15
-            })
-            console.log('Map!', gMap)
-        })
+  return _connectGoogleApi().then(() => {
+    gMap = new google.maps.Map(document.querySelector('#map'), {
+      center: { lat, lng },
+      zoom: 15,
+    })
+
+    //when the user clicks on the map, we want to add a marker
+    addMarker({ lat, lng })
+
+    _handleMouseClicks()
+  })
+}
+
+function _handleMouseClicks() {
+  google.maps.event.addListener(gMap, 'click', function (event) {
+    addMarker({ lat: event.latLng.lat(), lng: event.latLng.lng() })
+    console.log('event.latLng.lat()', event.latLng.lat())
+    console.log('event.latLng.lng()', event.latLng.lng())
+  })
 }
 
 function addMarker(loc) {
-    var marker = new google.maps.Marker({
-        position: loc,
-        map: gMap,
-        title: 'Hello World!'
-    })
-    return marker
+  var marker = new google.maps.Marker({
+    position: loc,
+    map: gMap,
+    title: 'Hello World!',
+  })
+  panTo(loc.lat, loc.lng)
+  return marker
 }
 
 function panTo(lat, lng) {
-    var laLatLng = new google.maps.LatLng(lat, lng)
-    gMap.panTo(laLatLng)
+  var laLatLng = new google.maps.LatLng(lat, lng)
+  gMap.panTo(laLatLng)
 }
 
-
 function _connectGoogleApi() {
-    if (window.google) return Promise.resolve()
-    const API_KEY = '' //TODO: Enter your API Key
-    var elGoogleApi = document.createElement('script')
-    elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`
-    elGoogleApi.async = true
-    document.body.append(elGoogleApi)
+  if (window.google) return Promise.resolve()
+  const API_KEY = 'AIzaSyBWWmFlAwBfXJuGKls-EwltdtlfudzwCps' //TODO: Enter your API Key
+  var elGoogleApi = document.createElement('script')
+  elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`
+  elGoogleApi.async = true
+  document.body.append(elGoogleApi)
 
-    return new Promise((resolve, reject) => {
-        elGoogleApi.onload = resolve
-        elGoogleApi.onerror = () => reject('Google script failed to load')
-    })
+  return new Promise((resolve, reject) => {
+    elGoogleApi.onload = resolve
+    elGoogleApi.onerror = () => reject('Google script failed to load')
+  })
 }

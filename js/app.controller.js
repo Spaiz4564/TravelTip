@@ -1,6 +1,10 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
+export const controller = {
+  onAddMarker,
+}
+
 window.onload = onInit
 window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
@@ -32,9 +36,8 @@ function getPosition() {
   })
 }
 
-function onAddMarker() {
-  console.log('Adding a marker')
-  mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 })
+function onAddMarker(lat, lng) {
+  mapService.addMarker({ lat, lng })
 }
 
 function onMoveToLoc(lat, lng) {
@@ -97,36 +100,36 @@ function onSearchLocation(ev) {
     .then((res) => {
       mapService.panTo(res.lat, res.lng)
       mapService.addMarker({ lat: res.lat, lng: res.lng })
+      setQueryParams({ lat: res.lat, lng: res.lng })
     })
     .then(() => {
       locService.getLocs().then((locs) => {
         renderLocations(locs)
       })
     })
+
   document.querySelector('.user-pos').innerHTML = search
 }
 
 function onCopyLocation() {
   const locs = locService.getLocs()
-  locs
-    .then((res) => {
-      console.log(res)
-      const lastLoc = res[res.length - 1]
-      const loc = `${lastLoc.lat} & ${lastLoc.lng}`
-      console.log(loc)
-      navigator.clipboard.writeText(loc)
-    })
-    .then(() => {
-      renderPosToQueryParams()
-    })
-}
-
-function renderPosToQueryParams() {
-  const locs = locService.getLocs()
   locs.then((res) => {
     const lastLoc = res[res.length - 1]
-    const lat = lastLoc.lat
-    const lng = lastLoc.lng
-    window.location.href = `index.html?lat=${lat}&lng=${lng}`
+    const urlStr = `index.html?lat=${lastLoc.lat}&lng=${lastLoc.lng}`
+    console.log(urlStr)
+    navigator.clipboard.writeText(urlStr)
   })
+}
+
+function setQueryParams(newParams) {
+  const url = new URL(window.location.href)
+  const params = new URLSearchParams(url.search)
+
+  for (var paramName in newParams) {
+    const paramValue = newParams[paramName]
+    params.set(paramName, paramValue) // used to update an existing query string parameter or add a new one if it doesn't exist.
+  }
+  url.search = params.toString()
+  console.log(url)
+  window.history.pushState({ path: url.href }, '', url.href) //modify the URL of the current page without reloading the page
 }

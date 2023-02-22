@@ -4,6 +4,7 @@ export const mapService = {
   initMap,
   panTo,
   addMarker,
+  handleMouseClicks,
 }
 
 // Var that is used throughout this Module (not global)
@@ -15,11 +16,11 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
       center: { lat, lng },
       zoom: 15,
     })
-    _handleMouseClicks()
+    handleMouseClicks()
   })
 }
 
-function _handleMouseClicks() {
+function handleMouseClicks() {
   google.maps.event.addListener(gMap, 'click', function (event) {
     panTo(event.latLng.lat(), event.latLng.lng())
   })

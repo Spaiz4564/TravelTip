@@ -15,7 +15,7 @@ function onInit() {
       console.log('Map is ready')
     })
     .then(() => {
-      locService.getLocs().then((locs) => {
+      locService.getLocs().then(locs => {
         renderLocations(locs)
       })
     })
@@ -43,17 +43,19 @@ function onMoveToLoc(lat, lng) {
 function onRemovePlace(id) {
   console.log(id)
   locService.removeLoc(id).then(() => {
-    onGetLocs()
+    locService.getLocs().then(locs => {
+      renderLocations(locs)
+    })
   })
 }
 
 function renderLocations(locs) {
   console.log(locs)
   const strHTML = locs.map(
-    (l) => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
+    l => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
     <div class="weather-createdAt">
     <p>${l.name}</p>
-    <p onclick="onRemovePlace('${l.id}')">X</p>
+    <p class="remove-btn" onclick="onRemovePlace('${l.id}')">X</p>
     </div>
     <p>${l.createdAt}</p>
   </div>`
@@ -63,7 +65,7 @@ function renderLocations(locs) {
 
 function onGetUserPos() {
   getPosition()
-    .then((pos) => {
+    .then(pos => {
       console.log('User position is:', pos.coords)
       document.querySelector(
         '.user-pos'
@@ -74,7 +76,7 @@ function onGetUserPos() {
         lng: pos.coords.longitude,
       })
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('err!!!', err)
     })
 }

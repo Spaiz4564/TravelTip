@@ -4,22 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles/travelTip.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope&display=swap"
+      rel="stylesheet"
+    />
     <title>TravelTip</title>
   </head>
   <body>
     <div class="app-container">
       <div class="info">
         <h1>TravelTip</h1>
-        <h2>You are at: Central park New York<span class="user-pos"></span></h2>
+        <h2>You are at: <span class="user-pos"></span></h2>
         <div class="weather-today">
           <button onclick="onAddMarker()" class="btn-add-marker">
             Add Marker Speific Location
           </button>
-          <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
+
           <div class="my-location">
             <button class="copy-loc">Copy Location</button>
           </div>
-          <p>Weather today</p>
         </div>
         <div class="locs"></div>
       </div>

@@ -17,7 +17,7 @@ function onInit() {
       console.log('Map is ready')
     })
     .then(() => {
-      locService.getLocs().then((locs) => {
+      locService.getLocs().then(locs => {
         renderLocations(locs)
       })
     })
@@ -42,15 +42,16 @@ function onMoveToLoc(lat, lng) {
   mapService.panTo(lat, lng)
   //we need to get the name of the location
   const posName = locService.getPosName(lat, lng)
-  posName.then((res) => {
+  posName.then(res => {
     document.querySelector('.user-pos').innerHTML = res
   })
 }
 
-function onRemovePlace(id) {
+function onRemovePlace(id, e) {
+  e.stopPropagation()
   console.log(id)
   locService.removeLoc(id).then(() => {
-    locService.getLocs().then((locs) => {
+    locService.getLocs().then(locs => {
       renderLocations(locs)
     })
   })
@@ -59,10 +60,10 @@ function onRemovePlace(id) {
 function renderLocations(locs) {
   console.log(locs)
   const strHTML = locs.map(
-    (l) => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
+    l => `<div onclick="onMoveToLoc(${l.lat},${l.lng})" class="card">
     <div class="weather-createdAt">
     <p>${l.name}</p>
-    <p class="remove-btn" onclick="onRemovePlace('${l.id}')">X</p>
+    <p class="remove-btn" onclick="onRemovePlace('${l.id}', event)"><i class="fa-solid fa-xmark"></i></p>
     </div>
     <p>${l.createdAt}</p>
   </div>`
@@ -72,14 +73,14 @@ function renderLocations(locs) {
 
 function onGetUserPos() {
   getPosition()
-    .then((pos) => {
+    .then(pos => {
       mapService.panTo(pos.coords.latitude, pos.coords.longitude)
       mapService.addMarker({
         lat: pos.coords.latitude,
         lng: pos.coords.longitude,
       })
     })
-    .catch((err) => {
+    .catch(err => {
       console.log('err!!!', err)
     })
 }
@@ -94,12 +95,12 @@ function onSearchLocation(ev) {
   console.log(search)
   locService
     .searchLocs(search)
-    .then((res) => {
+    .then(res => {
       mapService.panTo(res.lat, res.lng)
       mapService.addMarker({ lat: res.lat, lng: res.lng })
     })
     .then(() => {
-      locService.getLocs().then((locs) => {
+      locService.getLocs().then(locs => {
         renderLocations(locs)
       })
     })
@@ -109,7 +110,7 @@ function onSearchLocation(ev) {
 function onCopyLocation() {
   const locs = locService.getLocs()
   locs
-    .then((res) => {
+    .then(res => {
       console.log(res)
       const lastLoc = res[res.length - 1]
       const loc = `${lastLoc.lat} & ${lastLoc.lng}`
@@ -123,7 +124,7 @@ function onCopyLocation() {
 
 function renderPosToQueryParams() {
   const locs = locService.getLocs()
-  locs.then((res) => {
+  locs.then(res => {
     const lastLoc = res[res.length - 1]
     const lat = lastLoc.lat
     const lng = lastLoc.lng

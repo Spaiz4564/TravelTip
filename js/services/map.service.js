@@ -15,14 +15,13 @@ var gClickedPos = null
 
 var WEATHER_API = '771d657c519490928476077c19885b85'
 
-function initMap(lat = 32.0749831, lng = 34.9120554) {
+function initMap(lat = 32.109333, lng = 34.855499) {
   return _connectGoogleApi().then(() => {
     gMap = new google.maps.Map(document.querySelector('#map'), {
       center: { lat, lng },
-      zoom: 15,
+      zoom: 10,
     })
     handleMouseClicks()
-    getWeather(lat, lng)
   })
 }
 
@@ -68,9 +67,7 @@ function addMarker(loc) {
 
 function getWeather(lat, lng) {
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${WEATHER_API}`
-  console.log(url)
   return axios.get(url).then((res) => {
-    console.log(res.data)
     const { temp, humidity } = res.data.main
     const { description } = res.data.weather[0]
     const { speed } = res.data.wind
@@ -80,8 +77,6 @@ function getWeather(lat, lng) {
       description,
       speed,
     }
-    console.log(temp)
-    console.log(weather)
     return weather
   })
 }
